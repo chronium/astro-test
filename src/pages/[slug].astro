@@ -1,0 +1,29 @@
+---
+export async function getStaticPaths() {
+  const posts = await Astro.glob("/src/posts/*.md*");
+
+  return posts.map((post) => ({
+    props: {
+      post,
+    },
+    params: {
+      slug: post.frontmatter.slug,
+    },
+  }));
+}
+
+const { Content } = Astro.props.post;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <Content />
+  </body>
+</html>
